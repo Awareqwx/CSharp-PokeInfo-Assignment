@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@functions{
+    string UppercaseFirst(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return string.Empty;
+        return char.ToUpper(str[0]) + str.Substring(1).ToLower();
+    }
+}
+
+@{
+    //TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    string capsName = UppercaseFirst(ViewBag.pokeInfo["name"]);
+    string imgSrc = ViewBag.pokeInfo["sprites"]["front_default"];
+}
+<h2>@capsName</h2>
+<img src="@imgSrc">
+<h4>Types</h4>
+<ul>
+    @{
+        foreach(var type in ViewBag.pokeInfo["types"])
+        {
+            <li>@UppercaseFirst(type["type"]["name"].ToString())</li>
+        }
+    }
+</ul>
+<p>Height: @(ViewBag.pokeInfo["height"] / 10)m</p>
+<p>Height: @(ViewBag.pokeInfo["weight"] / 10)kg</p>
